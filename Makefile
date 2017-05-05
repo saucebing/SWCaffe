@@ -8,7 +8,7 @@ SWFLAGS=-DSWCODE
 
 INC_FLAGS=-I../thirdparty/glog_install/include
 INC_FLAGS += -I../thirdparty/openblas_install/include
-INC_FLAGS += -I../thirdparty/boost_install/include
+#INC_FLAGS += -I../thirdparty/boost_install/include
 INC_FLAGS += -I./include
 
 TEST_INC_FLAGS=-I../thirdparty/glog_install/include
@@ -16,7 +16,7 @@ TEST_INC_FLAGS += -I../thirdparty/openblas_install/include
 TEST_INC_FLAGS += -I./include
 TEST_INC_FLAGS += -I../thirdparty/googletest/include
 
-LDFLAGS += -L ../thirdparty/boost_install/lib -lboost_serialization
+#LDFLAGS += -L ../thirdparty/boost_install/lib -lboost_serialization
 LDFLAGS += -L ../thirdparty/glog_install/lib/ -lglog
 LDFLAGS += -L ../thirdparty/openblas_install/lib -lopenblas
 
@@ -148,7 +148,7 @@ test_solver.o: test_solver.cpp
 	$(CXX) -c $^ $(FLAGS) $(INC_FLAGS) -o $@
 
 vggnet: vggnet.o $(OBJ)
-	$(CXX) $^ $(LDFLAGS)  -o $@
+	$(CXX) $^ $(LDFLAGS) -o $@
 vggnet.o: vggnet.cpp
 	$(CXX) -c $^ $(FLAGS) $(INC_FLAGS) -o $@
 
@@ -178,6 +178,6 @@ test_lstm.o: test_lstm.cpp
 ./build/glog/%.o: ./src/glog/%.cpp
 	$(CXX) -c $^ $(FLAGS) $(INC_FLAGS) -o $@
 clean:
-	rm $(OBJ) *.o test_solver
+	rm $(OBJ) *.o vggnet test_solver
 swclean:
 	rm swtest/obj/* && rm test_sw
