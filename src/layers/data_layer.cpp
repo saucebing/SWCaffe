@@ -70,7 +70,7 @@ void DataLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
       << top[0]->width();
 
   mean = new Dtype[3*n_rows*n_cols];
-  if (Caffe::root_solver()){
+  //if (Caffe::root_solver()){
     unsigned char temp;
     for (int ch=0; ch<3; ch++)
       for (int c=0; c<n_cols; c++)
@@ -78,9 +78,13 @@ void DataLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
           mean_file.read((char*)&temp, sizeof(temp));
           mean[ch*n_cols*n_rows+c*n_rows+r] = (Dtype)temp;
         }
-  }
-  caffe_mpi_bcast<Dtype>(mean, 3*n_rows*n_cols, 0, MPI_COMM_WORLD);
-  MPI_Barrier(MPI_COMM_WORLD);
+  //}
+  //if(this->layer_param_.phase() == 1) {   // test phase, necessary ?
+  //  DLOG(INFO) << "bcast Begin";
+  //  caffe_mpi_bcast<Dtype>(mean, 3*n_rows*n_cols, 0, MPI_COMM_WORLD);
+  //  MPI_Barrier(MPI_COMM_WORLD);
+  //  DLOG(INFO) << "bcast OK";
+  //}
 }
 
 static double comm_lapes = 0.0;
