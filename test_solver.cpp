@@ -12,12 +12,12 @@ int main (int argc, char ** argv) {
 
   //mnist input 10, 1, 28, 28
   DataParameter data_param_data;
-  data_param_data.set_source("../data/train-images-idx3-ubyte", "../data/train-labels-idx1-ubyte");
+  data_param_data.set_source("../data/train-images-idx3-ubyte", "../data/train-labels-idx1-ubyte", "");
   data_param_data.set_batch_size(1024/Caffe::solver_count());
   //data_param_data.set_batch_size(8);
   LayerParameter data_train;
   data_train.set_name("data_train");
-  data_train.set_type("Data");
+  data_train.set_type("MNISTData");
   data_train.add_top("data");
   data_train.add_top("label");
   data_train.setup_data_param(data_param_data);
@@ -26,11 +26,11 @@ int main (int argc, char ** argv) {
   data_train.add_include(train_include);
 
   DataParameter data_param_label;
-  data_param_label.set_source("../data/t10k-images-idx3-ubyte", "../data/t10k-labels-idx1-ubyte");
+  data_param_label.set_source("../data/t10k-images-idx3-ubyte", "../data/t10k-labels-idx1-ubyte", "");
   data_param_label.set_batch_size(128);
   LayerParameter data_test;
   data_test.set_name("data_test");
-  data_test.set_type("Data");
+  data_test.set_type("MNISTData");
   data_test.add_top("data");
   data_test.add_top("label");
   data_test.setup_data_param(data_param_label);

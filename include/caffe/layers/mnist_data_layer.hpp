@@ -1,47 +1,27 @@
-#ifndef CAFFE_DATA_LAYER_HPP_
-#define CAFFE_DATA_LAYER_HPP_
+#ifndef CAFFE_MNIST_DATA_LAYER_HPP_
+#define CAFFE_MNIST_DATA_LAYER_HPP_
 
-#include <vector>
-
-#include "caffe/blob.hpp"
-//#include "caffe/data_transformer.hpp"
-//#include "caffe/internal_thread.hpp"
-#include <iostream>
-#include <fstream>
-#include "caffe/layer.hpp"
-#include "caffe/util/mpi.hpp"
-//#include "caffe/layers/base_data_layer.hpp"
-//#include "caffe/proto/caffe.pb.h"
-//#include "caffe/util/db.hpp"
+#include "caffe/layers/data_layer.hpp"
 
 namespace caffe {
 
-
 template <typename Dtype>
-class Batch {
- public:
-  Blob<Dtype> data_, label_;
-};
+class MNISTDataLayer : public DataLayer<Dtype> {
+public:
+  explicit MNISTDataLayer(const LayerParameter& param);
+  virtual ~MNISTDataLayer();
 
-
-template <typename Dtype>
-class DataLayer : public Layer<Dtype> {
- public:
-  explicit DataLayer(const LayerParameter& param);
-  virtual ~DataLayer();
-  //virtual void DataLayerSetUp(const vector<Blob<Dtype>*>& bottom,
-  //    const vector<Blob<Dtype>*>& top);
   virtual void LayerSetUp(const vector<Blob<Dtype>*>& bottom,
-      const vector<Blob<Dtype>*>& top); 
+      const vector<Blob<Dtype>*>& top);
   // DataLayer uses DataReader instead for sharing for parallelism
   virtual inline bool ShareInParallel() const { return false; }
-  virtual inline const char* type() const { return "Data"; }
+  virtual inline const char* type() const { return "MNISTData"; }
   virtual inline int ExactNumBottomBlobs() const { return 0; }
   virtual inline int MinTopBlobs() const { return 1; }
   virtual inline int MaxTopBlobs() const { return 3; }
 
   virtual void Reshape(const vector<Blob<Dtype>*>& bottom,
-      const vector<Blob<Dtype>*>& top) {}
+      const vector<Blob<Dtype>*>& top){}
 
   virtual void Backward_cpu(const vector<Blob<Dtype>*>& top,
       const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom) {}
@@ -49,9 +29,8 @@ class DataLayer : public Layer<Dtype> {
   virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
       const vector<Blob<Dtype>*>& top);
 
-/*
- protected:
-  int reverseInt (int i) {
+protected:
+ int reverseInt (int i) {
       unsigned char c1, c2, c3, c4;
       c1 = i & 255;
       c2 = (i >> 8) & 255;
@@ -74,9 +53,7 @@ class DataLayer : public Layer<Dtype> {
   long offset_;
 
   bool start;
- */
 };
 
-}  // namespace caffe
-
-#endif  // CAFFE_DATA_LAYER_HPP_
+}
+#endif

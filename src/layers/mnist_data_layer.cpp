@@ -1,43 +1,36 @@
-#ifdef USE_OPENCV
-#include <opencv2/core/core.hpp>
-#endif  // USE_OPENCV
 #include <stdint.h>
 //#include <assert.h>
 
 #include <vector>
 
 //#include "caffe/data_transformer.hpp"
-#include "caffe/layers/data_layer.hpp"
+#include "caffe/layers/mnist_data_layer.hpp"
 //#include "caffe/util/benchmark.hpp"
 
 namespace caffe {
 
 template <typename Dtype>
-DataLayer<Dtype>::DataLayer(const LayerParameter& param):
-//  offset_(0),n_rows(0), n_cols(0), number_of_images(0),
-	Layer<Dtype>(param)
+MNISTDataLayer<Dtype>::MNISTDataLayer(const LayerParameter& param):offset_(0),
+	n_rows(0), n_cols(0), number_of_images(0),
+	DataLayer<Dtype>(param)
 {
-  /*
   file.open(this->layer_param_.data_param().data_source().c_str(), std::ios::in | std::ios::binary);
 	label_file.open(this->layer_param_.data_param().label_source().c_str(), std::ios::in | std::ios::binary );
 	if(!file.is_open() || !label_file.is_open())
 		DLOG(FATAL) << "MNIST Read failed";
   start = true;
-  */
 }
 
 template <typename Dtype>
-DataLayer<Dtype>::~DataLayer() {
-  /*
+MNISTDataLayer<Dtype>::~MNISTDataLayer() {
 	file.close();
 	label_file.close();
-  */
 }
 
 template <typename Dtype>
-void DataLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
+void MNISTDataLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
       const vector<Blob<Dtype>*>& top) {
-/*
+
   //if(Caffe::solver_rank() == 0) {
     int magic_number=0;
     number_of_images=0;
@@ -101,15 +94,13 @@ void DataLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
       << "output data size: " << top[0]->num() << ","
       << top[0]->channels() << "," << top[0]->height() << ","
       << top[0]->width();
-      */
 }
 
 static double comm_lapes = 0.0;
 static int times = 0;
 template <typename Dtype>
-void DataLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+void MNISTDataLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
       const vector<Blob<Dtype>*>& top){
-    /*
     if(this->layer_param_.phase() == 1) {
     #ifdef SEQ_MNIST
       if (start){
@@ -358,10 +349,11 @@ void DataLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
       times = 0;
     }
   }
-*/
 }
 
-INSTANTIATE_CLASS(DataLayer);
-REGISTER_LAYER_CLASS(Data);
+INSTANTIATE_CLASS(MNISTDataLayer);
+REGISTER_LAYER_CLASS(MNISTData);
 
-}  // namespace caffe
+}
+
+

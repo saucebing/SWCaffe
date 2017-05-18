@@ -30,6 +30,8 @@ OBJ=./build/blob.o ./build/common.o ./build/syncedmem.o ./build/layer_factory.o\
 		./build/layers/conv_layer.o \
 		./build/layers/pooling_layer.o \
 		./build/layers/data_layer.o \
+		./build/layers/imagenet_data_layer.o \
+		./build/layers/mnist_data_layer.o \
 		./build/layers/neuron_layer.o\
 		./build/layers/relu_layer.o\
 		./build/layers/softmax_layer.o\

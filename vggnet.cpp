@@ -76,7 +76,7 @@ int main (int argc, char ** argv) {
   data_param_data.set_batch_size(100);
   LayerParameter data_train;
   data_train.set_name("data_train");
-  data_train.set_type("Data");
+  data_train.set_type("IMAGENETData");
   data_train.add_top("data");
   data_train.add_top("label");
   data_train.setup_data_param(data_param_data);
@@ -89,7 +89,7 @@ int main (int argc, char ** argv) {
   data_param_label.set_batch_size(100);
   LayerParameter data_test;
   data_test.set_name("data_test");
-  data_test.set_type("Data");
+  data_test.set_type("IMAGENETData");
   data_test.add_top("data");
   data_test.add_top("label");
   data_test.setup_data_param(data_param_label);
