@@ -6,11 +6,11 @@ int main (int argc, char ** argv) {
   MPI_Init(&argc, &argv);
 #endif
   DataParameter data_param_data;
-  data_param_data.set_source("../data/train-images-idx3-ubyte", "../data/train-labels-idx1-ubyte");
+  data_param_data.set_source("../data/train-images-idx3-ubyte", "../data/train-labels-idx1-ubyte", "");
   data_param_data.set_batch_size(100);
   LayerParameter data_train;
   data_train.set_name("data_train");
-  data_train.set_type("Data");
+  data_train.set_type("MNISTData");
   data_train.add_top("data");
   data_train.add_top("clip");
   data_train.add_top("label");
@@ -20,11 +20,11 @@ int main (int argc, char ** argv) {
   data_train.add_include(train_include);
 
   DataParameter data_param_label;
-  data_param_label.set_source("../data/t10k-images-idx3-ubyte", "../data/t10k-labels-idx1-ubyte");
+  data_param_label.set_source("../data/t10k-images-idx3-ubyte", "../data/t10k-labels-idx1-ubyte", "");
   data_param_label.set_batch_size(100);
   LayerParameter data_test;
   data_test.set_name("data_test");
-  data_test.set_type("Data");
+  data_test.set_type("MNISTData");
   data_test.add_top("data");
   data_test.add_top("clip");
   data_test.add_top("label");

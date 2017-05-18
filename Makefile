@@ -2,13 +2,12 @@ CXX=mpic++
 FLAGS=-O3
 FLAGS+=-DCPU_ONLY
 FLAGS+=-DMYMPI
-#FLAGS+=-DSEQ_MNIST
+FLAGS+=-DSEQ_MNIST
 
-SWFLAGS=-DSWCODE
+#SWFLAGS=-DSWCODE
 
-INC_FLAGS=-I../thirdparty/glog_install/include
+#INC_FLAGS=-I../thirdparty/glog_install/include
 INC_FLAGS += -I../thirdparty/openblas_install/include
-#INC_FLAGS += -I../thirdparty/boost_install/include
 INC_FLAGS += -I./include
 
 TEST_INC_FLAGS=-I../thirdparty/glog_install/include
@@ -17,7 +16,7 @@ TEST_INC_FLAGS += -I./include
 TEST_INC_FLAGS += -I../thirdparty/googletest/include
 
 #LDFLAGS += -L ../thirdparty/boost_install/lib -lboost_serialization
-LDFLAGS += -L ../thirdparty/glog_install/lib/ -lglog
+#LDFLAGS += -L ../thirdparty/glog_install/lib/ -lglog
 LDFLAGS += -L ../thirdparty/openblas_install/lib -lopenblas
 
 OBJ=./build/blob.o ./build/common.o ./build/syncedmem.o ./build/layer_factory.o\
@@ -62,9 +61,9 @@ OBJ=./build/blob.o ./build/common.o ./build/syncedmem.o ./build/layer_factory.o\
 		./build/solvers/sgd_solver.o\
 		./build/util/benchmark.o\
 		./build/solver.o\
-		./build/util/mpi.o
+		./build/util/mpi.o\
+		./build/glog/logging.o
 		#./build/util/hdf5.o \
-		#./build/glog/logging.o\
 
 TEST_OBJ=./build/blob.o ./build/common.o ./build/syncedmem.o ./build/layer_factory.o\
 		./build/util/math_functions.o \

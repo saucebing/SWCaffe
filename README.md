@@ -22,9 +22,16 @@ large image channels, swDNN is used and small channels swBLAS is used
 http://yann.lecun.com/exdb/mnist/
 2. Make test_solver
 3. mpirun -n X ./test_solver for test mnist LeNet Training
+#### MNIST + LSTM
+2. please download mnist data into ../data/
+http://yann.lecun.com/exdb/mnist/
+3. Modify Makefile add
+FLAGS+=-DSEQ_MNIST
+2. Make test_lstm
+3. mpirun -n X ./test_lstm for test mnist LSTM Training
 #### IMAGENET + VGG-16
 2. Please download imagenet data into ../data/imagenet_bin/
-rename binary files into 
+rename binary files into
     mean.bin
     test_data.bin
     test_label.bin
@@ -34,7 +41,7 @@ rename binary files into
     train_mean.bin
 3. Prepare Caffemodel at ../data/serialized_caffemodel
   How to generate serialized_caffemodel?
-  git checkout protobuf-loadmodel 
+  git checkout protobuf-loadmodel
   download VGG_ILSVRC_16_layers.caffemodel into ../data/VGG_ILSVRC_16_layers.caffemodel
   ./net_param_serialize
 4. Make vggnet

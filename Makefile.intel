@@ -2,24 +2,22 @@ CXX=mpic++
 FLAGS=-O3
 FLAGS+=-DCPU_ONLY
 FLAGS+=-DMYMPI
+FLAGS+=-DSEQ_MNIST
 
-LSTMFLAGS=-DSEQ_MNIST
-SWFLAGS=-DSWCODE
+#SWFLAGS=-DSWCODE
 
-INC_FLAGS=-I../thirdparty/glog_install/include
+#INC_FLAGS=-I../thirdparty/glog_install/include
 INC_FLAGS += -I../thirdparty/openblas_install/include
-#INC_FLAGS += -I../thirdparty/hdf5_install/include
 INC_FLAGS += -I./include
 
 TEST_INC_FLAGS=-I../thirdparty/glog_install/include
 TEST_INC_FLAGS += -I../thirdparty/openblas_install/include
-TEST_INC_FLAGS += -I../thirdparty/hdf5_install/include
 TEST_INC_FLAGS += -I./include
 TEST_INC_FLAGS += -I../thirdparty/googletest/include
 
-LDFLAGS += -L ../thirdparty/glog_install/lib/ -lglog
+#LDFLAGS += -L ../thirdparty/boost_install/lib -lboost_serialization
+#LDFLAGS += -L ../thirdparty/glog_install/lib/ -lglog
 LDFLAGS += -L ../thirdparty/openblas_install/lib -lopenblas
-#LDFLAGS += -L ../thirdparty/hdf5_install/lib -lhdf5 -lhdf5_hl
 
 OBJ=./build/blob.o ./build/common.o ./build/syncedmem.o ./build/layer_factory.o\
 		./build/util/math_functions.o \
@@ -31,6 +29,8 @@ OBJ=./build/blob.o ./build/common.o ./build/syncedmem.o ./build/layer_factory.o\
 		./build/layers/conv_layer.o \
 		./build/layers/pooling_layer.o \
 		./build/layers/data_layer.o \
+		./build/layers/imagenet_data_layer.o \
+		./build/layers/mnist_data_layer.o \
 		./build/layers/neuron_layer.o\
 		./build/layers/relu_layer.o\
 		./build/layers/softmax_layer.o\
@@ -51,6 +51,7 @@ OBJ=./build/blob.o ./build/common.o ./build/syncedmem.o ./build/layer_factory.o\
 		./build/layers/reduction_layer.o\
 		./build/layers/euclidean_loss_layer.o\
 		./build/layers/silence_layer.o\
+		./build/layers/dropout_layer.o\
 		./build/net.o\
 		./build/solvers/adadelta_solver.o\
 		./build/solvers/adagrad_solver.o\
@@ -60,9 +61,9 @@ OBJ=./build/blob.o ./build/common.o ./build/syncedmem.o ./build/layer_factory.o\
 		./build/solvers/sgd_solver.o\
 		./build/util/benchmark.o\
 		./build/solver.o\
-		./build/util/mpi.o
+		./build/util/mpi.o\
+		./build/glog/logging.o
 		#./build/util/hdf5.o \
-		#./build/glog/logging.o\
 
 TEST_OBJ=./build/blob.o ./build/common.o ./build/syncedmem.o ./build/layer_factory.o\
 		./build/util/math_functions.o \
@@ -140,12 +141,16 @@ TEST_sw_OBJ=./build/blob.o ./build/common.o ./build/syncedmem.o ./build/layer_fa
 		./swtest/obj/test_convolution_layer.o
 #		./swtest/obj/conv_layer_impl.o
 
-all: test_solver
+all: vggnet 
 
 test_solver: test_solver.o $(OBJ)
 	$(CXX) $^ $(LDFLAGS)  -o $@
-#-lhdf5_cpp -lhdf5_hl_cpp  
 test_solver.o: test_solver.cpp
+	$(CXX) -c $^ $(FLAGS) $(INC_FLAGS) -o $@
+
+vggnet: vggnet.o $(OBJ)
+	$(CXX) $^ $(LDFLAGS) -o $@
+vggnet.o: vggnet.cpp
 	$(CXX) -c $^ $(FLAGS) $(INC_FLAGS) -o $@
 
 test_all: $(TEST_OBJ)
@@ -174,6 +179,6 @@ test_lstm.o: test_lstm.cpp
 ./build/glog/%.o: ./src/glog/%.cpp
 	$(CXX) -c $^ $(FLAGS) $(INC_FLAGS) -o $@
 clean:
-	rm $(OBJ) *.o test_solver
+	rm $(OBJ) *.o vggnet test_solver
 swclean:
 	rm swtest/obj/* && rm test_sw
