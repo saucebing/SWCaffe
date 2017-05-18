@@ -30,7 +30,10 @@ FLAGS+=-DSEQ_MNIST
 2. Make test_lstm
 3. mpirun -n X ./test_lstm for test mnist LSTM Training
 #### IMAGENET + VGG-16
-2. Please download imagenet data into ../data/imagenet_bin/
+2. Please download imagenet data from 
+https://pan.baidu.com/s/1bQdZcE
+password: p23u
+into ../data/imagenet_bin/
 rename binary files into
     mean.bin
     test_data.bin
