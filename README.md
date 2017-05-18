@@ -38,7 +38,7 @@ rename binary files into
   download VGG_ILSVRC_16_layers.caffemodel into ../data/VGG_ILSVRC_16_layers.caffemodel
   ./net_param_serialize
 4. Make vggnet
-5. mpirun -n X ./vggnet for test mnist VGG Training
+5. mpirun -n X ./vggnet for test imagenet VGG Training
 
 
 ### Bugs
