@@ -15,20 +15,35 @@ https://github.com/THUHPGC/swDNN.git
 large image channels, swDNN is used and small channels swBLAS is used
 
 ### Usage
-1. Please install openBLAS into 
+1. Please install openBLAS into
 ../thirdparty/OpenBLAS/
+#### MNIST + LeNet
 2. please download mnist data into ../data/
 http://yann.lecun.com/exdb/mnist/
-2. Make
+2. Make test_solver
 3. mpirun -n X ./test_solver for test mnist LeNet Training
-4. To use Sunway version please
-git checkout sunway
+#### IMAGENET + VGG-16
+2. Please download imagenet data into ../data/imagenet_bin/
+rename binary files into 
+    mean.bin
+    test_data.bin
+    test_label.bin
+    test_mean.bin
+    train_data.bin
+    train_label.bin
+    train_mean.bin
+3. Prepare Caffemodel at ../data/serialized_caffemodel
+  How to generate serialized_caffemodel?
+  git checkout protobuf-loadmodel 
+  download VGG_ILSVRC_16_layers.caffemodel into ../data/VGG_ILSVRC_16_layers.caffemodel
+  ./net_param_serialize
+4. Make vggnet
+5. mpirun -n X ./vggnet for test mnist VGG Training
+
 
 ### Bugs
-1. DataLayer is customized for mnist
-2. MPI DataLayer do not support LSTM
+1. DataLayer is customized for mnist and imagenet
 3. Only support double for Sunway
-4. Still depends google glog, problem with checknotnull
 5. acc_trans is waiting to be ingegreted with code from Li Liandeng
 
 ### Developer
